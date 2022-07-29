@@ -1,10 +1,10 @@
-
-
 #include <DHT_U.h>
 #include <DHT.h>
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
+
+//TODO DECODER EXCEPTIONS CLOSE CLIENTS , MANAGE STATUS CODES AND CONNECTION
 
 DHT dht(D5,DHT11);
 float temp;
