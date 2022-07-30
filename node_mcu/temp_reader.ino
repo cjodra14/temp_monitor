@@ -3,19 +3,22 @@
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
+#include <setjmp.h>
+#include <WiFiCredentials.h>
 
 //TODO DECODER EXCEPTIONS CLOSE CLIENTS , MANAGE STATUS CODES AND CONNECTION
 
 DHT dht(D5,DHT11);
+char jsonOutput[128];
+jmp_buf exception_mng;
+HTTPClient http;
+StaticJsonDocument<256> root;
+
+const char* ssid = SSID;
+const char* password = PASSWORD;
+
 float temp;
 float humidity;
-char jsonOutput[128];
-
-const char* ssid = "****";
-const char* password = "****";
-
-String user = "";
-String pass = "";
 
 void setup(){
     Serial.begin(9600);
@@ -36,40 +39,39 @@ void setup(){
 }
 
 void loop(){
+    switch (setjmp(exception_mng)) {
+        case 0: //sin errores
+            break;
+        case 1: //division por cero
+            Serial.println("EXCEPTION DIVISION BY 0");
+            break;
+        case 2: //divisor negativo
+            Serial.println("EXCEPTION DIVISION BY NEGATIVE NUMBER");
+            break;
+        default: //se ejecuta cuando no se cumple ninguno de los casos anteriores
+            Serial.println("GENERIC EXCEPTION");
+            break;
+    } 
+
     temp = dht.readTemperature();
     humidity = dht.readHumidity();
 
-    Serial.print("Temperature: ");
-    Serial.print(String(temp));
-    Serial.print(" ºC Humidity: ");
-    Serial.print(String(humidity));
-    Serial.println("%");
-
     if (WiFi.status() == WL_CONNECTED){
-        HTTPClient http;
-    
-        StaticJsonDocument<256> root;
-
         root["temp"] = String(temp);
         root["humidity"] = String(humidity);
 
         serializeJson(root, jsonOutput);
-        serializeJson(root, Serial);
 
         WiFiClient client;
 
         http.begin(client,"http://192.168.1.22:8080/status");
         http.addHeader("Content-Type", "application/json");
 
-        int httpCode = http.POST(String(jsonOutput));
+        http.POST(String(jsonOutput));
 
-        if (httpCode > 0){
-            String payload  = http.getString();
-            Serial.println("\n Status Code: "+String(httpCode));
-            Serial.println(payload);
-        }
-
+        root.clear();
+        http.end();
     }
 
-    delay(500);
+    delay(15000);
 }
