@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +17,9 @@ type Status struct {
 func main() {
 	actualTemp := Status{}
 	router := gin.Default()
+
+	router.Use(cors.Default())
+
 	router.POST("/temp", func(ctx *gin.Context) {
 		var temp Status
 
@@ -25,8 +29,6 @@ func main() {
 			})
 			return
 		}
-
-
 
 		fmt.Println("The room temperature is: " + temp.Temperature + "ºC")
 
@@ -57,7 +59,7 @@ func main() {
 			})
 			return
 		}
-		
+
 		temperature, err := strconv.ParseFloat(status.Temperature, 64)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
