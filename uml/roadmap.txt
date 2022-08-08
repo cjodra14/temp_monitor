@@ -1,0 +1,30 @@
+////////////////////////////////////////////////// (Reunion semanal)
+ 1 - Estado de arte (Situación actual de proyectos similares)
+ 2 - Alcance y objetivos (Que queremos conseguir y hasta donde vamos a llegar)
+    - DAFO
+ 3 - Estudio de las diferentes tecnologias.
+    - Como conseguir los objetivos y el alcance propuesto.
+                Cosas a tener en cuenta:
+            -> Seguridad:
+                -> No accesible por externos
+                -> sin posibilidades de panic, accesible en caso de caida de red 
+                    -> acceso sin red, (verifocación en frio)
+            -> Puesta en marcha:
+                -> Sencilla
+                -> Actualizaciones remotas
+                -> Curva de aperndizaje del despliegue muy rapida
+                -> Intento de documentar paso a paso (uso de videos)
+                -> Escalabilidad de cara  nuevas features, de cara a PLCs
+                -> preparar devops completo, aws, dockers, actions(pipelines), subir apps a stores, kubernetes, argocd
+
+//https://github.com/gopcua/opcua
+//https://github.com/ASNeG/OpcUaWebServer
+// https://github.com/OPCUAUniCT/OPCUAWebPlatformUniCT
+ 4 - Entrar en detalle, diseño, arquitectura, tecnologias a utilizar... 
+ 5 - Desarrollo
+    - Nombre de los productos (internos y comerciales)
+    - Entorno de pruebas
+        - Simular PLC con micros
+        - Desarrollo del cliente  OPC
+        - Desarrollo del Back (local/remoto)
+        - clientes vista ( pruebas y enseñar ) 
