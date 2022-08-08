@@ -10,7 +10,7 @@ import (
 )
 
 type Status struct {
-	Temperature string `json:"temp,omitempty"`
+	Temperature string `json:"temperature,omitempty"`
 	Humidity    string `json:"humidity,omitempty"`
 }
 
@@ -88,7 +88,7 @@ func main() {
 	})
 
 	router.GET("/status", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{"Temperature": actualTemp.Temperature, "Humidity": actualTemp.Humidity})
+		ctx.JSON(http.StatusOK, actualTemp)
 	})
 
 	router.GET("/test", func(ctx *gin.Context) {

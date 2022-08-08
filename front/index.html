@@ -6,12 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Room temperature</title>
 </head>
-<body>
+<body onload="loadData()">
+    <h1>The temperature and humidity in the room are:</h1>
+    <p id="temp_data"></p>
+    <p id="humidity_data"></p>
     <script>
-        fetch('http://localhost:8080/status')
+        function loadData(){
+            fetch('http://localhost:8080/status')
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data =>{
+            console.log(data);
+            document.getElementById("temp_data").innerHTML = "Temperature: "+data.temp+" ºC";
+            document.getElementById("humidity_data").innerHTML = "Humidity: "+data.humidity+" %";
+        })
+        .catch(error => console.log('ERROR'))
+        }
     </script>
+   
+
+
     
 </body>
 </html>
