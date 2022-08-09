@@ -28,3 +28,12 @@
         - Desarrollo del cliente  OPC
         - Desarrollo del Back (local/remoto)
         - clientes vista ( pruebas y enseñar ) 
+
+
+OPC INFO
+
+    -- OPC server (Arduino)
+        -> https://www.st4makers.com/category/installation-guides/
+
+    -- OPC CLient (Golang)
+        -> https://medium.com/vacatronics/how-to-connect-with-opc-ua-using-go-5d7fdcac6217
